@@ -1,0 +1,88 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+
+
+/flutter_chat_ui-1.4.4-hijacked/example
+/emoji_picker-0.1.0-hijacked/example
+
+# Ignore android build
+/android/*
+!/android/build.gradle
+!/android/app/
+/android/app/*
+!/android/app/build.gradle
+!/android/app/google-services.json
+!/android/app/src/
+/android/app/src/*
+!/android/app/src/main/
+!/android/app/src/debug/
+/android/app/src/main/*
+!/android/app/src/main/AndroidManifest.xml
+!/android/app/src/main/res
+
+# Ignore ios build
+/ios/*
+!/ios/Runner/
+/ios/Runner/*
+!/ios/Runner/Info.plist
+!ios/Runner/Assets.xcassets/
+
+# Web
+/web/
+
+# Test
+/test/
+
+# Ignore .vscode
+.vscode
+
+# windows
+/windows/
+
+# linter
+analysis_options.yaml
