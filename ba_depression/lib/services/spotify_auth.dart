@@ -5,14 +5,15 @@ import 'package:ba_depression/models/auth_tokens.dart';
 import 'package:ba_depression/services/api_path.dart';
 import 'package:ba_depression/services/spotify_auth_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 
 class SpotifyAuth extends ChangeNotifier {
   /// Implemented using 'Authorization Code' flow from Spotify auth guide:
   /// https://developer.spotify.com/documentation/general/guides/authorization-guide/
   Future<void> authenticate() async {
-    const clientId = "b125ec602b5146ddb19b0f33330c9d1d";
-    const redirectUri = "http://localhost:8888/callback";
+    final clientId = dotenv.env['CLIENT_ID']!;
+    final redirectUri = dotenv.env['REDIRECT_URI']!;
     final state = _getRandomString(6);
 
     try {
@@ -23,6 +24,7 @@ class SpotifyAuth extends ChangeNotifier {
       );
 
       // Validate state from response
+      print("this is the result: " + result);
       final returnedState = Uri.parse(result).queryParameters['state'];
       if (state != returnedState) throw HttpException('Invalid access');
 

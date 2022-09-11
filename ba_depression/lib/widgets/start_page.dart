@@ -23,6 +23,7 @@ class _StartPageState extends State<StartPage> {
     try {
       _signInFromSavedTokens();
     } catch (e) {
+      print(mounted);
       if (!mounted) return;
       setState(() => _isLoading = false);
     }
@@ -44,10 +45,9 @@ class _StartPageState extends State<StartPage> {
     try {
       setState(() => _isLoading = true);
       await auth.authenticate();
-      //Navigator.pop(context);
     } catch (e) {
       // ignore: avoid_print
-      print(e);
+      print("handleSignIn prints" + e.toString());
     } finally {
       setState(() => _isLoading = false);
     }
