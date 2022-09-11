@@ -2,13 +2,19 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:ba_depression/models/auth_tokens.dart';
+import 'package:ba_depression/models/user.dart';
 import 'package:ba_depression/services/api_path.dart';
+import 'package:ba_depression/services/spotify_api.dart';
 import 'package:ba_depression/services/spotify_auth_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:provider/provider.dart';
 
 class SpotifyAuth extends ChangeNotifier {
+  User? user;
+
   /// Implemented using 'Authorization Code' flow from Spotify auth guide:
   /// https://developer.spotify.com/documentation/general/guides/authorization-guide/
   Future<void> authenticate() async {
@@ -17,22 +23,24 @@ class SpotifyAuth extends ChangeNotifier {
     final state = _getRandomString(6);
 
     try {
-      print(APIPath.requestAuthorization(clientId, redirectUri, state));
+      //request authorization and let users log in
+      APIPath.requestAuthorization(clientId, redirectUri, state);
       final result = await FlutterWebAuth.authenticate(
         url: APIPath.requestAuthorization(clientId, redirectUri, state),
-        callbackUrlScheme: "http://localhost:8888/callback",
+        callbackUrlScheme: "baDepression",
       );
 
       // Validate state from response
-      print("this is the result: " + result);
       final returnedState = Uri.parse(result).queryParameters['state'];
       if (state != returnedState) throw HttpException('Invalid access');
 
+      //Using the code from the last request, send Post request to access token
       final String? code = Uri.parse(result).queryParameters['code'];
       final tokens = await SpotifyAuthApi.getAuthTokens(code!, redirectUri);
-      await tokens.saveToStorage();
 
-      //user = await SpotifyApi.getCurrentUser(); // Uses token in storage
+      //save the token
+      await tokens.saveToStorage();
+      user = await SpotifyApi.getCurrentUser(); // Uses token in storage
       notifyListeners();
     } on Exception catch (e) {
       // ignore: avoid_print

@@ -1,4 +1,5 @@
 import 'package:ba_depression/services/spotify_auth.dart';
+import 'package:ba_depression/widgets/tutorial1_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,6 @@ class _StartPageState extends State<StartPage> {
     try {
       _signInFromSavedTokens();
     } catch (e) {
-      print(mounted);
       if (!mounted) return;
       setState(() => _isLoading = false);
     }
@@ -32,9 +32,11 @@ class _StartPageState extends State<StartPage> {
   Future<void> _signInFromSavedTokens() async {
     final auth = context.read<SpotifyAuth>();
     setState(() => _isLoading = true);
+    final navigator = Navigator.of(context);
     try {
       await auth.signInFromSavedTokens();
-      //Navigator.popAndPushNamed(context, HomePage.routeName);
+
+      navigator.push(MaterialPageRoute(builder: (context) => Tutorial1Page()));
     } catch (_) {
     } finally {
       setState(() => _isLoading = false);
@@ -45,9 +47,6 @@ class _StartPageState extends State<StartPage> {
     try {
       setState(() => _isLoading = true);
       await auth.authenticate();
-    } catch (e) {
-      // ignore: avoid_print
-      print("handleSignIn prints" + e.toString());
     } finally {
       setState(() => _isLoading = false);
     }

@@ -4,25 +4,27 @@ import 'dart:io';
 import 'package:ba_depression/models/auth_tokens.dart';
 import 'package:ba_depression/services/api_path.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class SpotifyAuthApi {
-  static const clientId = "b125ec602b5146ddb19b0f33330c9d1d";
-  static const clientSecret = "22a5cc35e6fe40e1868e7d18e0cc6a38";
+  static final clientId = dotenv.env['CLIENT_ID']!;
+  static final clientSecret = dotenv.env['CLIENT_SECRET'];
   static final base64Credential =
-      utf8.fuse(base64).encode('$clientId:$clientSecret');
+      base64.encode(utf8.encode('$clientId:$clientSecret'));
 
   static Future<AuthTokens> getAuthTokens(
       String code, String redirectUri) async {
     final response = await http.post(
       Uri.parse(APIPath.requestToken),
       body: {
-        'grant_type': 'authorization_code',
         'code': code,
         'redirect_uri': redirectUri,
+        'grant_type': 'authorization_code',
       },
       headers: {HttpHeaders.authorizationHeader: 'Basic $base64Credential'},
     );
+    print(response.body);
 
     if (response.statusCode == 200) {
       return AuthTokens.fromJson(json.decode(response.body));
@@ -48,7 +50,7 @@ class SpotifyAuthApi {
       if (responseBody['refresh_token'] == null) {
         responseBody['refresh_token'] = originalTokens.refreshToken;
       }
-
+      print(response.body);
       return AuthTokens.fromJson(responseBody);
     } else {
       throw Exception(
