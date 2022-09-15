@@ -1,5 +1,5 @@
 import 'package:ba_depression/services/spotify_auth.dart';
-import 'package:ba_depression/widgets/start_page.dart';
+import 'package:ba_depression/pages/start_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider<SpotifyAuth>(
       create: (_) => SpotifyAuth(),
       child: MaterialApp(
-        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        title: 'ba_depression',
         theme: ThemeData(
             splashFactory: InkRipple.splashFactory,
             pageTransitionsTheme: const PageTransitionsTheme(builders: {

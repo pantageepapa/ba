@@ -41,6 +41,7 @@ class SpotifyAuth extends ChangeNotifier {
       //save the token
       await tokens.saveToStorage();
       user = await SpotifyApi.getCurrentUser(); // Uses token in storage
+
       notifyListeners();
     } on Exception catch (e) {
       // ignore: avoid_print

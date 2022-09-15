@@ -50,7 +50,7 @@ class SpotifyAuthApi {
       if (responseBody['refresh_token'] == null) {
         responseBody['refresh_token'] = originalTokens.refreshToken;
       }
-      print(response.body);
+      print("getNewTokens prints: " + response.body);
       return AuthTokens.fromJson(responseBody);
     } else {
       throw Exception(

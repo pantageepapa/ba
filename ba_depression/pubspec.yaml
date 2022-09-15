@@ -42,6 +42,12 @@ dependencies:
   oauth2: ^2.0.0
   http_interceptor: ^1.0.2
   equatable: ^2.0.5
+  flutter_spinkit: ^5.1.0
+  fluttertoast: ^8.0.9
+  shared_preferences: ^2.0.15
+  cached_network_image: ^3.2.1
+  flutter_emoji: ^2.4.0
+  flutter_svg: ^1.1.5
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +67,14 @@ dev_dependencies:
 flutter:
   assets:
     - .env
+    - assets/woman_leaving_birdcage.png
+    - assets/listening_to_music.png
+    - assets/g10.png
+    - assets/person.png
+    - assets/insights_grey.svg
+    - assets/insights_green.svg
+    - assets/measurements_grey.svg
+    - assets/measurements_green.svg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
