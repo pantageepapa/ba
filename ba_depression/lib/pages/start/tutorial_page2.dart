@@ -1,5 +1,5 @@
-import 'package:ba_depression/pages/tutorial_page1.dart';
-import 'package:ba_depression/pages/tutorial_page3.dart';
+import 'package:ba_depression/pages/start/tutorial_page1.dart';
+import 'package:ba_depression/pages/start/tutorial_page3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';

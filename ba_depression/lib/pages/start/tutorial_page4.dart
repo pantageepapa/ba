@@ -1,7 +1,7 @@
 import 'package:ba_depression/models/custom_image_provider.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
-import 'package:ba_depression/pages/home_page.dart';
-import 'package:ba_depression/pages/tutorial_page1.dart';
+import 'package:ba_depression/pages/main/home_page.dart';
+import 'package:ba_depression/pages/start/tutorial_page1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';

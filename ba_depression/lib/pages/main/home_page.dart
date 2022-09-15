@@ -1,5 +1,5 @@
-import 'package:ba_depression/pages/insight_page.dart';
-import 'package:ba_depression/pages/measurement_page.dart';
+import 'package:ba_depression/pages/main/insight_page.dart';
+import 'package:ba_depression/pages/main/measurement_page.dart';
 import 'package:ba_depression/widgets/bottom_tab_bar.dart';
 import 'package:ba_depression/widgets/top_bar.dart';
 import 'package:flutter/material.dart';

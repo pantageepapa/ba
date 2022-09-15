@@ -1,5 +1,5 @@
 import 'package:ba_depression/models/custom_image_provider.dart';
-import 'package:ba_depression/pages/own_profile.dart';
+import 'package:ba_depression/pages/main/own_profile.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
