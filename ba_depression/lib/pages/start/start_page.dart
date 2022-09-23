@@ -1,4 +1,5 @@
 import 'package:ba_depression/models/auth_tokens.dart';
+import 'package:ba_depression/pages/main/all/home_page.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
 import 'package:ba_depression/pages/start/tutorial_page1.dart';
 import 'package:ba_depression/pages/start/tutorial_page3.dart';
@@ -48,7 +49,7 @@ class _StartPageState extends State<StartPage> {
       await auth.signInFromSavedTokens();
       if (!mounted) return;
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => TutorialPage3()));
+          .push(MaterialPageRoute(builder: (context) => HomePage()));
     } catch (_) {
       setState(() => _isLoading = false);
     }

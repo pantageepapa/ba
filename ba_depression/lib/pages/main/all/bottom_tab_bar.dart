@@ -27,9 +27,9 @@ class BottomTabBar extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.transparent,
+          color: Color(0xFFFBFBFB),
         ),
-        height: MediaQuery.of(context).size.height * 0.067 +
+        height: MediaQuery.of(context).size.height * 0.07 +
             MediaQuery.of(context).padding.bottom,
         padding: EdgeInsets.only(
           left: MediaQuery.of(context).size.width * 0.045,
@@ -44,6 +44,14 @@ class BottomTabBar extends StatelessWidget {
             Tab(
               icon: SvgPicture.asset(
                 0 == selectedIndex
+                    ? 'assets/overview_green.svg'
+                    : 'assets/overview_grey.svg',
+                height: iconSize,
+              ),
+            ),
+            Tab(
+              icon: SvgPicture.asset(
+                1 == selectedIndex
                     ? 'assets/measurements_green.svg'
                     : 'assets/measurements_grey.svg',
                 height: iconSize,
@@ -51,7 +59,7 @@ class BottomTabBar extends StatelessWidget {
             ),
             Tab(
               icon: SvgPicture.asset(
-                1 == selectedIndex
+                2 == selectedIndex
                     ? 'assets/insights_green.svg'
                     : 'assets/insights_grey.svg',
                 height: iconSize,

@@ -1,15 +1,15 @@
 import 'package:ba_depression/models/custom_image_provider.dart';
-import 'package:ba_depression/pages/main/own_profile.dart';
+import 'package:ba_depression/pages/main/all/own_profile.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TopBar extends StatelessWidget {
-  static var topBarHeight;
+  var topBarHeight;
   final int selectedIndex;
 
-  const TopBar({Key? key, required this.selectedIndex}) : super(key: key);
+  TopBar({Key? key, required this.selectedIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,25 +40,28 @@ class TopBar extends StatelessWidget {
                 ? Container(
                     height: topBarHeight,
                     padding: EdgeInsets.symmetric(vertical: 2.5),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 2.0),
-                      child: Text(
-                        "Measurements 🔎",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 23),
-                      ),
+                    child: Text(
+                      "Overview",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 23),
                     ))
-                : Container(
-                    height: topBarHeight,
-                    padding: EdgeInsets.symmetric(vertical: 2.5),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 2.0),
-                      child: Text(
-                        "Insights ✨",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700, fontSize: 23),
-                      ),
-                    )),
+                : selectedIndex == 1
+                    ? Container(
+                        height: topBarHeight,
+                        padding: EdgeInsets.symmetric(vertical: 2.5),
+                        child: Text(
+                          "Measurements",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 23),
+                        ))
+                    : Container(
+                        height: topBarHeight,
+                        padding: EdgeInsets.symmetric(vertical: 2.5),
+                        child: Text(
+                          "Insights",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 23),
+                        )),
             GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
@@ -80,7 +83,7 @@ class TopBar extends StatelessWidget {
                         aspectRatio: 1 / 1,
                         child: Icon(
                           Icons.person,
-                          size: 60,
+                          size: 20,
                           color: Color(0xFFBFBFBF),
                         ),
                       ),

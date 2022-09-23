@@ -54,7 +54,7 @@ class SpotifyAuth extends ChangeNotifier {
   Future<void> signInFromSavedTokens() async {
     try {
       await AuthTokens.updateTokenToLatest();
-      //user = await SpotifyApi.getCurrentUser(); // Uses token in storage
+      user = await SpotifyApi.getCurrentUser(); // Uses token in storage
       notifyListeners();
     } catch (e) {
       print(e);

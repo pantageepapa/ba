@@ -1,5 +1,7 @@
+import 'package:ba_depression/pages/main/all/home_page.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
 import 'package:ba_depression/pages/start/start_page.dart';
+import 'package:ba_depression/old/track_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,8 +15,15 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SpotifyAuth>(
-      create: (_) => SpotifyAuth(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TrackProvider>(create: (_) => TrackProvider()),
+        ChangeNotifierProvider<SpotifyAuth>(
+          create: (_) => SpotifyAuth(),
+        ),
+        ChangeNotifierProvider<SelectedIndexProvider>(
+            create: ((context) => SelectedIndexProvider()))
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'ba_depression',

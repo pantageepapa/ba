@@ -75,6 +75,17 @@ flutter:
     - assets/insights_green.svg
     - assets/measurements_grey.svg
     - assets/measurements_green.svg
+    - assets/overview_green.svg
+    - assets/overview_grey.svg
+    - assets/Vector1.svg
+    - assets/Vector2.svg
+    - assets/Vector3.svg
+    - assets/Vector4.svg
+    - assets/Vector5.svg
+    - assets/play-button-4213.svg
+    - assets/rewind.svg
+    - assets/pause.svg
+    - assets/forward.svg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
