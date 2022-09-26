@@ -33,6 +33,7 @@ class SpotifyApi {
 
     if (response.statusCode == 200) {
       print("current Track called");
+      await Track.saveCurrentSong(json.decode(response.body));
       return Track.fromJson(json.decode(response.body));
     } else if (response.statusCode == 204) {
       print("current Track called");
@@ -62,7 +63,18 @@ class SpotifyApi {
   }
 
   static play() async {
-    final response = await client.put(Uri.parse(APIPath.pausePlayback));
+    var songContextAndDeviceId = await Track.readCurrentSong();
+    if (songContextAndDeviceId == null) {
+      return null;
+    }
+    final body = {
+      'context_uri': songContextAndDeviceId[0],
+      //'device_id': songContextAndDeviceId[1],
+      'position_ms': 0
+    };
+    print(json.encode(body));
+    final response = await client.put(Uri.parse(APIPath.pausePlayback),
+        body: json.encode(body));
     if (response.statusCode == 204) {
       print('Successfully played');
       return;

@@ -18,7 +18,7 @@ class MusicPlayer extends StatefulWidget {
 }
 
 class _MusicPlayerState extends State<MusicPlayer> {
-  StreamController<Track?> _streamController = StreamController();
+  final StreamController<Track?> _streamController = StreamController();
 
   @override
   void dispose() {

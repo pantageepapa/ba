@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Track {
   const Track(
@@ -14,6 +15,10 @@ class Track {
   final bool isPlaying;
   final String id;
 
+  static String context = 'context';
+  static String position = 'position';
+  static String deviceId = 'device_id';
+
   static Track? fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
 
@@ -27,17 +32,41 @@ class Track {
     final trackImageUrl = json['item']['album']['images'].length != 0
         ? json['item']['album']['images'][0]['url']
         : null;
-
-    // final name = json['display_name'];
-    // final avatarImageUrl =
-    //     json['images'].length != 0 ? json['images'][0]['url'] : null;
-    // final id = json['id'];
     return Track(
         id: id,
         artistName: artistName,
         trackName: trackName,
         trackImageUrl: trackImageUrl,
         isPlaying: isPlaying);
+  }
+
+  static Future<void> saveCurrentSong(Map<String, dynamic> json) async {
+    String songContext = json['item']['album']['uri'];
+    String deviceId = json['device']['id'];
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(context, songContext);
+      await prefs.setString(Track.deviceId, deviceId);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  static Future<List<String?>?> readCurrentSong() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? songContext = prefs.getString(context);
+      String? deviceId = prefs.getString(Track.deviceId);
+      if (songContext == null) {
+        return null;
+      }
+      return [songContext, deviceId];
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   // Map<String, dynamic> toJson() => {
