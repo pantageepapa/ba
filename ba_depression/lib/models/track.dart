@@ -40,6 +40,32 @@ class Track {
         isPlaying: isPlaying);
   }
 
+  static List<Track>? fromJsonRecentlyPlayed(Map<String, dynamic>? json) {
+    if (json == null) return null;
+
+    List<Track> tracks = [];
+
+    for (int i = 0; i < json['items'].length; i++) {
+      final id = json['items'][i]['track']['id'];
+      final trackName = json['items'][i]['track']['name'];
+      final artistName = json['items'][i]['track']['artists'].length != 0
+          ? json['items'][i]['track']['artists'][0]['name']
+          : "Unknown Artist";
+      final trackImageUrl =
+          json['items'][i]['track']['album']['images'].length != 0
+              ? json['items'][i]['track']['album']['images'][0]['url']
+              : null;
+      Track track = Track(
+          id: id,
+          artistName: artistName,
+          trackName: trackName,
+          trackImageUrl: trackImageUrl,
+          isPlaying: true);
+      tracks.add(track);
+    }
+    return tracks;
+  }
+
   static Future<void> saveCurrentSong(Map<String, dynamic> json) async {
     String songContext = json['item']['album']['uri'];
     String deviceId = json['device']['id'];

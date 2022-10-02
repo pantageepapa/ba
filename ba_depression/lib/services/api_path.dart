@@ -4,7 +4,8 @@ class APIPath {
     'user-read-private',
     'user-modify-playback-state',
     'user-read-playback-state',
-    'user-read-currently-playing'
+    'user-read-currently-playing',
+    'user-read-recently-played',
   ];
 
   static String requestAuthorization(
@@ -16,4 +17,6 @@ class APIPath {
   static String getCurrentTrack = 'https://api.spotify.com/v1/me/player';
   static String pausePlayback = 'https://api.spotify.com/v1/me/player/pause';
   static String playPlayback = 'https://api.spotify.com/v1/me/player/play';
+  static String getRecentlyPlayed =
+      'https://api.spotify.com/v1/me/player/recently-played?limit=5';
 }

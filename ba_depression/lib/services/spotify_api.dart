@@ -50,6 +50,21 @@ class SpotifyApi {
     }
   }
 
+  static Future<List<Track>?> getRecentlyPlayed() async {
+    final response = await client.get(Uri.parse(APIPath.getRecentlyPlayed));
+    if (response.statusCode == 200) {
+      print("recentlyPlayed called");
+      List<Track>? tracks =
+          Track.fromJsonRecentlyPlayed(json.decode(response.body));
+      print(tracks);
+      return tracks;
+    } else {
+      print(response.body);
+      throw Exception(
+          'Failed to get recently played tracks with status code ${response.statusCode}');
+    }
+  }
+
   static pause() async {
     final response = await client.put(Uri.parse(APIPath.pausePlayback));
     if (response.statusCode == 204) {
