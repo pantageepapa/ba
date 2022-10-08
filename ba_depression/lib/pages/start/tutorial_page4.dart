@@ -1,4 +1,5 @@
 import 'package:ba_depression/models/custom_image_provider.dart';
+import 'package:ba_depression/services/firebase_db.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
 import 'package:ba_depression/pages/main/all/home_page.dart';
 import 'package:ba_depression/pages/start/tutorial_page1.dart';
@@ -123,6 +124,12 @@ class _TutorialPage4State extends State<TutorialPage4> {
               SafeArea(
                 child: InkWell(
                   onTap: () {
+                    Map<String, dynamic> data = {
+                      'songs': [],
+                      'moods': [],
+                    };
+                    DatabaseService().addUser(auth.user!.id, data);
+
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },

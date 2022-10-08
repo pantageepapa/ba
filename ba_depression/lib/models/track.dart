@@ -6,6 +6,7 @@ class Track {
       {required this.artistName,
       required this.trackName,
       required this.id,
+      required this.playedAt,
       required this.trackImageUrl,
       required this.isPlaying});
 
@@ -14,6 +15,7 @@ class Track {
   final String artistName;
   final bool isPlaying;
   final String id;
+  final DateTime playedAt;
 
   static String context = 'context';
   static String position = 'position';
@@ -33,6 +35,7 @@ class Track {
         ? json['item']['album']['images'][0]['url']
         : null;
     return Track(
+        playedAt: DateTime.now(),
         id: id,
         artistName: artistName,
         trackName: trackName,
@@ -55,8 +58,11 @@ class Track {
           json['items'][i]['track']['album']['images'].length != 0
               ? json['items'][i]['track']['album']['images'][0]['url']
               : null;
+      final playedAt = DateTime.parse(json['items'][i]['played_at']);
+
       Track track = Track(
           id: id,
+          playedAt: playedAt,
           artistName: artistName,
           trackName: trackName,
           trackImageUrl: trackImageUrl,
@@ -67,16 +73,17 @@ class Track {
   }
 
   static Future<void> saveCurrentSong(Map<String, dynamic> json) async {
-    String songContext = json['item']['album']['uri'];
-    String deviceId = json['device']['id'];
-
-    try {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(context, songContext);
-      await prefs.setString(Track.deviceId, deviceId);
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    if (json['is_playing']) {
+      String songContext = json['item']['album']['uri'];
+      String deviceId = json['device']['id'];
+      try {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(Track.context, songContext);
+        await prefs.setString(Track.deviceId, deviceId);
+      } catch (e) {
+        // ignore: avoid_print
+        print(e);
+      }
     }
   }
 

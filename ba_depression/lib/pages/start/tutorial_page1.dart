@@ -73,7 +73,7 @@ class TutorialPage1 extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
                   Text(
-                    'Depression can have dangerous consequences (20% suicide rate) so it’s a great choice to track your depression.',
+                    'Depression can have dangerous consequences so it’s a great choice to track your depression.',
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
                   ),

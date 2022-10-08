@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "875418259968",
+    "project_id": "mhealth-49991",
+    "storage_bucket": "mhealth-49991.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875418259968:android:6310f968a477745f3abee5",
+        "android_client_info": {
+          "package_name": "com.example.ba_depression"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875418259968-d3bitkosncv537bg3rk70b6emrtphvlg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW0NP4tS2PrW01SQSbvGWtEHjN6HF3RYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875418259968-d3bitkosncv537bg3rk70b6emrtphvlg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "875418259968-leje3ivlh1udnut9m73pl089gbvksiqi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.baDepression"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

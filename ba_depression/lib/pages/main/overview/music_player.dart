@@ -18,12 +18,16 @@ class MusicPlayer extends StatefulWidget {
 }
 
 class _MusicPlayerState extends State<MusicPlayer> {
-  final StreamController<Track?> _streamController = StreamController();
+  late StreamController<Track?> _streamController;
+
+  late Timer _timer;
+  bool isPlaying = false;
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    _timer.cancel();
     _streamController.close();
   }
 
@@ -31,10 +35,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _streamController = StreamController<Track?>();
     Timer.run(() async {
       await getTrack();
     });
-    Timer.periodic(Duration(seconds: 30), (timer) async {
+
+    _timer = Timer.periodic(Duration(seconds: 20), (timer) async {
       await getTrack();
     });
   }
@@ -87,6 +93,23 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       ],
                     ),
                     child: Text("Error occured"));
+              } else if (snapshot.data == null) {
+                return Container(
+                    height: MediaQuery.of(context).size.height * 0.17,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Color(0x10000000),
+                            offset: Offset(0, 0),
+                            blurRadius: 6.0),
+                      ],
+                    ),
+                    child: SpinKitCircle(
+                      color: Theme.of(context).primaryColor,
+                      size: 30,
+                    ));
               } else {
                 return displayPlayer(snapshot.data!);
               }
@@ -95,6 +118,8 @@ class _MusicPlayerState extends State<MusicPlayer> {
   }
 
   Widget displayPlayer(Track track) {
+    isPlaying = track.isPlaying;
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.17,
       decoration: BoxDecoration(
@@ -143,8 +168,47 @@ class _MusicPlayerState extends State<MusicPlayer> {
                                 fontSize: 15,
                                 color: Color(0xFF707070)),
                           ),
-                          Player(
-                            isPlaying: track.isPlaying,
+                          //Player
+                          Padding(
+                            padding: EdgeInsets.only(
+                                top: MediaQuery.of(context).size.height * 0.02),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () async {
+                                    await SpotifyApi.previous();
+                                    await getTrack();
+                                  },
+                                  child: SvgPicture.asset(
+                                    'assets/rewind.svg',
+                                    height: 16,
+                                  ),
+                                ),
+                                GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    onTap: () async {
+                                      await SpotifyApi.pause();
+                                      await getTrack();
+                                    },
+                                    child: SvgPicture.asset(
+                                      'assets/pause.svg',
+                                      height: 19,
+                                    )),
+                                GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () async {
+                                    await SpotifyApi.skip();
+                                    await getTrack();
+                                  },
+                                  child: SvgPicture.asset(
+                                    'assets/forward.svg',
+                                    height: 16,
+                                  ),
+                                )
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -164,8 +228,47 @@ class _MusicPlayerState extends State<MusicPlayer> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.03,
                       ),
-                      Player(
-                        isPlaying: track.isPlaying,
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.02),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () async {
+                                await SpotifyApi.previous();
+                                await getTrack();
+                              },
+                              child: SvgPicture.asset(
+                                'assets/rewind.svg',
+                                height: 16,
+                              ),
+                            ),
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () async {
+                                await SpotifyApi.skip();
+                                await getTrack();
+                              },
+                              child: SvgPicture.asset(
+                                'assets/play-button-4213.svg',
+                                height: 20,
+                              ),
+                            ),
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () async {
+                                await SpotifyApi.skip();
+                                await getTrack();
+                              },
+                              child: SvgPicture.asset(
+                                'assets/forward.svg',
+                                height: 16,
+                              ),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -190,9 +293,17 @@ class _PlayerState extends State<Player> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SvgPicture.asset(
-            'assets/rewind.svg',
-            height: 16,
+          InkWell(
+            onTap: () async {
+              await SpotifyApi.previous();
+              setState(() {
+                widget.isPlaying = true;
+              });
+            },
+            child: SvgPicture.asset(
+              'assets/rewind.svg',
+              height: 16,
+            ),
           ),
           widget.isPlaying
               ? InkWell(
@@ -218,9 +329,14 @@ class _PlayerState extends State<Player> {
                     height: 20,
                   ),
                 ),
-          SvgPicture.asset(
-            'assets/forward.svg',
-            height: 16,
+          InkWell(
+            onTap: () async {
+              await SpotifyApi.skip();
+            },
+            child: SvgPicture.asset(
+              'assets/forward.svg',
+              height: 16,
+            ),
           )
         ],
       ),

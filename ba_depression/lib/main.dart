@@ -1,13 +1,16 @@
+import 'package:ba_depression/firebase_options.dart';
 import 'package:ba_depression/pages/main/all/home_page.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
 import 'package:ba_depression/pages/start/start_page.dart';
 import 'package:ba_depression/old/track_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: '.env');
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

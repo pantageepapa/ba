@@ -10,6 +10,7 @@ class TrackProvider extends ChangeNotifier {
       trackName: "",
       id: "",
       trackImageUrl: "",
+      playedAt: DateTime.now(),
       isPlaying: false);
 
   Track? get track => _track;

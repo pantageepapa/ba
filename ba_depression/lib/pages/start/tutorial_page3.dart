@@ -90,7 +90,7 @@ class _TutorialPage3State extends State<TutorialPage3> {
                     height: MediaQuery.of(context).size.height * 0.09,
                   ),
                   Text(
-                    'Track your mood with Spotify and connect to a therapist.',
+                    'Track your mood with Spotify and get help from therapists.',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w600,

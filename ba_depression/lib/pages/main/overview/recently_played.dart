@@ -20,30 +20,34 @@ class RecentlyPlayed extends StatefulWidget {
 }
 
 class _RecentlyPlayedState extends State<RecentlyPlayed> {
-  final StreamController<List<Track>?> _streamController = StreamController();
+  late StreamController<List<Track>?> _streamController;
+  final ScrollController _scrollController = ScrollController();
+  late Timer _timer;
 
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
     _streamController.close();
+    _timer.cancel();
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _streamController = StreamController<List<Track>?>.broadcast();
     Timer.run(() async {
       await getRecentlyPlayed();
     });
-    Timer.periodic(Duration(seconds: 30), (timer) async {
+    _timer = Timer.periodic(Duration(seconds: 30), (timer) async {
       await getRecentlyPlayed();
     });
   }
 
   Future<void> getRecentlyPlayed() async {
     try {
-      List<Track>? tracks = await SpotifyApi.getRecentlyPlayed();
+      List<Track>? tracks = await SpotifyApi.getRecentlyPlayed(20);
       _streamController.sink.add(tracks);
     } catch (e) {
       print(e.toString());
@@ -58,7 +62,7 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
               return Container(
-                  height: MediaQuery.of(context).size.height * 0.17,
+                  height: MediaQuery.of(context).size.height * 0.3,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -77,7 +81,7 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
             default:
               if (snapshot.hasError || snapshot.data == null) {
                 return Container(
-                    height: MediaQuery.of(context).size.height * 0.17,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -91,7 +95,7 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
                     child: Text("Error occured"));
               } else {
                 return Container(
-                  height: MediaQuery.of(context).size.height * 0.3,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -106,11 +110,11 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 15, top: 15, bottom: 13),
+                        padding: EdgeInsets.only(left: 15, top: 20, bottom: 13),
                         child: Text(
                           "Listening History",
                           style: TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 15),
+                              fontWeight: FontWeight.w700, fontSize: 15),
                         ),
                       ),
                       SizedBox(
@@ -118,6 +122,7 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
                       ),
                       Expanded(
                         child: ListView.separated(
+                            controller: _scrollController,
                             separatorBuilder: (context, index) {
                               return Divider(
                                 indent:
@@ -129,7 +134,6 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
                             },
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
-                            // physics: ScrollPhysics(),
                             itemCount: snapshot.data!.length,
                             itemBuilder: (context, index) {
                               return Padding(
@@ -142,6 +146,9 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
                               );
                             }),
                       ),
+                      SizedBox(
+                        height: 20,
+                      )
                     ],
                   ),
                 );

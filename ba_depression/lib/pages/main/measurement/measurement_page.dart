@@ -29,9 +29,7 @@ class _MeasurementPageState extends State<MeasurementPage> {
         horizontal: MediaQuery.of(context).size.width * 0.06,
       ),
       child: Column(
-        children: [
-          MusicPlayer(),
-        ],
+        children: [],
       ),
     );
   }
