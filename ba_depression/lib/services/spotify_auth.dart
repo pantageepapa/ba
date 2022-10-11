@@ -11,6 +11,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SpotifyAuth extends ChangeNotifier {
   User? user;
@@ -41,6 +42,10 @@ class SpotifyAuth extends ChangeNotifier {
       //save the token
       await tokens.saveToStorage();
       user = await SpotifyApi.getCurrentUser(); // Uses token in storage
+
+      //save uid for later usage
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('uid', user!.id);
 
       notifyListeners();
     } on Exception catch (e) {

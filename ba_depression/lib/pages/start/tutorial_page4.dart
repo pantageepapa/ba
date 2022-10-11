@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TutorialPage4 extends StatefulWidget {
   const TutorialPage4({Key? key}) : super(key: key);
@@ -123,13 +124,10 @@ class _TutorialPage4State extends State<TutorialPage4> {
               ),
               SafeArea(
                 child: InkWell(
-                  onTap: () {
-                    Map<String, dynamic> data = {
-                      'songs': [],
-                      'moods': [],
-                    };
-                    DatabaseService().addUser(auth.user!.id, data);
-
+                  onTap: () async {
+                    DatabaseService().addUser(
+                      auth.user!.id,
+                    );
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));
                   },
