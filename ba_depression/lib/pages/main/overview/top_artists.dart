@@ -82,18 +82,22 @@ class _TopArtistsState extends State<TopArtists> {
             default:
               if (snapshot.hasError || snapshot.data == null) {
                 return Container(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Color(0x10000000),
-                            offset: Offset(0, 0),
-                            blurRadius: 6.0),
-                      ],
-                    ),
-                    child: Text("Error occured"));
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    boxShadow: const [
+                      BoxShadow(
+                          color: Color(0x10000000),
+                          offset: Offset(0, 0),
+                          blurRadius: 6.0),
+                    ],
+                  ),
+                  child: Text(
+                    "Error occured. Try to reload.",
+                    style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                  ),
+                );
               } else {
                 return Container(
                   height: MediaQuery.of(context).size.height * 0.25,

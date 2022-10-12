@@ -50,8 +50,13 @@ class _MoodQuestionState extends State<MoodQuestion> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Timer.run(() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('visibility', true);
+      setState(() {});
+    });
 
-    _timer = Timer.periodic(Duration(seconds: 10), (timer) async {
+    _timer = Timer.periodic(Duration(minutes: 30), (timer) async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('visibility', true);
       setState(() {});
@@ -76,7 +81,7 @@ class _MoodQuestionState extends State<MoodQuestion> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "How are you feeling today?",
+                      "How are you feeling now?",
                       style:
                           TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
                     ),
@@ -107,7 +112,7 @@ class _MoodQuestionState extends State<MoodQuestion> {
                                             listen: false)
                                         .user!
                                         .id,
-                                    2);
+                                    2.5);
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 await prefs.setBool('visibility', false);
@@ -121,7 +126,7 @@ class _MoodQuestionState extends State<MoodQuestion> {
                                             listen: false)
                                         .user!
                                         .id,
-                                    4);
+                                    5);
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 await prefs.setBool('visibility', false);
@@ -135,7 +140,7 @@ class _MoodQuestionState extends State<MoodQuestion> {
                                             listen: false)
                                         .user!
                                         .id,
-                                    6);
+                                    7.5);
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 await prefs.setBool('visibility', false);
@@ -149,7 +154,7 @@ class _MoodQuestionState extends State<MoodQuestion> {
                                             listen: false)
                                         .user!
                                         .id,
-                                    8);
+                                    10);
                                 SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 await prefs.setBool('visibility', false);

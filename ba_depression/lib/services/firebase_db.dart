@@ -20,13 +20,19 @@ class DatabaseService {
         onError: (e) => print("Error adding user"));
   }
 
-  Future<void> addMood(String uid, int mood) async {
-    await _firestore.collection('moods').doc(uid).update({
-      "moods": FieldValue.arrayUnion([
-        {"addedOn": DateTime.now(), "mood": mood}
-      ])
-    }).then((value) => print("Mood added successfully"),
-        onError: (e) => print("Error adding user"));
+  Future<void> addMood(String uid, double mood) async {
+    await _firestore
+        .collection('moods')
+        .doc(uid)
+        .collection('moods')
+        .add({"addedOn": DateTime.now(), "mood": mood}).then(
+            (value) => print("Mood added successfully"),
+            onError: (e) => print("Error adding user"));
+    // await _firestore.collection('moods').doc(uid).update({
+    //   "moods": FieldValue.arrayUnion([
+    //     {"addedOn": DateTime.now(), "mood": mood}
+    //   ])
+    // })
   }
 
   Future<void> addSongs(String uid) async {
@@ -34,18 +40,20 @@ class DatabaseService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? last_update = prefs.getInt('last_update');
     last_update ??= 0;
+    // print(DateTime.fromMillisecondsSinceEpoch(last_update));
 
-    List<Track>? songs = await SpotifyApi.getRecentlyPlayed(10);
+    List<Track>? songs = await SpotifyApi.getRecentlyPlayed(50);
     if (songs == null) {
       return;
     }
     //check if duplicates exist
     List<int> song_lastupdates = [];
     for (Track song in songs) {
-      // print(last_update);
-      // print(song.playedAt.millisecondsSinceEpoch);
       song_lastupdates.add(song.playedAt.millisecondsSinceEpoch);
       if (last_update < song.playedAt.millisecondsSinceEpoch) {
+        // print(DateTime.fromMillisecondsSinceEpoch(
+        //     song.playedAt.millisecondsSinceEpoch));
+        // print("song added");
         AudioFeatures? audioFeatures =
             await SpotifyApi.getAudioFeatures(song.id);
         if (audioFeatures == null) {
@@ -104,7 +112,7 @@ class DatabaseService {
   Future<Map<DateTime, double>?> getValence(
       String uid, Timestamp lastUpdate) async {
     final Map<DateTime, double> ret = {};
-    print('mood called');
+    print('valence called');
     QuerySnapshot<Map<dynamic, dynamic>> dShot = await _firestore
         .collection('songs')
         .doc(uid)
@@ -116,6 +124,25 @@ class DatabaseService {
     for (var snap in dShot.docs) {
       ret.addAll({snap['played_at'].toDate(): snap['valence']});
     }
+    return ret;
+  }
+
+  Future<Map<DateTime, double>?> getMoods(
+      String uid, Timestamp lastUpdate) async {
+    final Map<DateTime, double> ret = {};
+    QuerySnapshot<Map<dynamic, dynamic>> dShot = await _firestore
+        .collection('moods')
+        .doc(uid)
+        .collection('moods')
+        .where('addedOn', isGreaterThan: lastUpdate)
+        .orderBy('addedOn', descending: true)
+        .get();
+    if (dShot.docs == []) return null;
+
+    for (var snap in dShot.docs) {
+      ret.addAll({snap['addedOn'].toDate(): snap['mood'].toDouble()});
+    }
+
     return ret;
   }
 }

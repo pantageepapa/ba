@@ -75,15 +75,17 @@ class TopBar extends StatelessWidget {
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 3),
-                        borderRadius: BorderRadius.all(Radius.circular(100)),
-                        color: Color(0xFFF3F3F3),
-                      ),
+                          border: Border.all(
+                              color: Theme.of(context).primaryColor, width: 2),
+                          borderRadius: BorderRadius.all(Radius.circular(100)),
+                          color: Colors.white
+                          // color: Color(0xFFF3F3F3),
+                          ),
                       child: AspectRatio(
                         aspectRatio: 1 / 1,
                         child: Icon(
                           Icons.person,
-                          size: 20,
+                          size: 25,
                           color: Color(0xFFBFBFBF),
                         ),
                       ),

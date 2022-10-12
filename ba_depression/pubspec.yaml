@@ -51,6 +51,8 @@ dependencies:
   firebase_core: ^1.24.0
   cloud_firestore: ^3.5.1
   fl_chart: ^0.55.2
+  percent_indicator: ^4.2.2
+  gradient_progress_indicator: ^1.0.0+5
 
 dev_dependencies:
   flutter_test:

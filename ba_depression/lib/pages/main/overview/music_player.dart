@@ -92,7 +92,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                             blurRadius: 6.0),
                       ],
                     ),
-                    child: Text("Error occured"));
+                    child: Center(child: Text("Error occured")));
               } else if (snapshot.data == null) {
                 return Container(
                     height: MediaQuery.of(context).size.height * 0.17,
@@ -106,10 +106,12 @@ class _MusicPlayerState extends State<MusicPlayer> {
                             blurRadius: 6.0),
                       ],
                     ),
-                    child: SpinKitCircle(
-                      color: Theme.of(context).primaryColor,
-                      size: 30,
-                    ));
+                    child: Center(
+                        child: Text(
+                      "Error occured. Try to reload.",
+                      style:
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                    )));
               } else {
                 return displayPlayer(snapshot.data!);
               }

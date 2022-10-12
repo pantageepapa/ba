@@ -5,25 +5,24 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../services/graph_service.dart';
 import '../../../services/spotify_auth.dart';
 
-class DurationDay extends StatefulWidget {
-  const DurationDay({
-    Key? key,
-  }) : super(key: key);
+class ValenceWeek extends StatefulWidget {
+  const ValenceWeek({Key? key}) : super(key: key);
 
   @override
-  State<DurationDay> createState() => _DurationDayState();
+  State<ValenceWeek> createState() => _ValenceWeekState();
 }
 
-class _DurationDayState extends State<DurationDay> {
+class _ValenceWeekState extends State<ValenceWeek> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<FlSpot>?>(
-        future: GraphService().getDurationsDay(
+        future: GraphService().getValenceWeek(
             Provider.of<SpotifyAuth>(context, listen: false).user!.id),
         builder: ((context, snapshot) {
           switch (snapshot.connectionState) {
@@ -86,7 +85,7 @@ class _DurationDayState extends State<DurationDay> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Playing Time',
+                                Text('Mood of songs',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 12)),
@@ -94,7 +93,8 @@ class _DurationDayState extends State<DurationDay> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Total playing minutes per hour in a day',
+                                Text(
+                                    'Average valence describing the musical positiveness in a week',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -108,7 +108,7 @@ class _DurationDayState extends State<DurationDay> {
                             child: LineChart(LineChartData(
                                 gridData: FlGridData(
                                     show: true,
-                                    horizontalInterval: 20,
+                                    horizontalInterval: 0.25,
                                     drawVerticalLine: false,
                                     getDrawingHorizontalLine: (value) {
                                       return FlLine(
@@ -141,11 +141,16 @@ class _DurationDayState extends State<DurationDay> {
                                     touchTooltipData: LineTouchTooltipData(
                                         getTooltipItems: (touchedSpots) {
                                           return touchedSpots
-                                              .map((touchedSpot) => LineTooltipItem(
-                                                  '${touchedSpot.y.toInt()} min',
-                                                  TextStyle(
-                                                      color: Color(0xFF707070),
-                                                      fontSize: 10)))
+                                              .map((touchedSpot) =>
+                                                  LineTooltipItem(
+                                                    touchedSpot.y
+                                                        .toDouble()
+                                                        .toStringAsFixed(2),
+                                                    TextStyle(
+                                                        color:
+                                                            Color(0xFF707070),
+                                                        fontSize: 10),
+                                                  ))
                                               .toList();
                                         },
                                         tooltipBorder: BorderSide(
@@ -165,13 +170,14 @@ class _DurationDayState extends State<DurationDay> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 1,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
                                   leftTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
+                                      interval: 0.25,
                                       getTitlesWidget: leftTitleWidgets,
                                     ),
                                   ),
@@ -195,10 +201,10 @@ class _DurationDayState extends State<DurationDay> {
                                         width: 1,
                                       ),
                                     )),
-                                minX: 0,
-                                maxX: 23,
+                                minX: 1,
+                                maxX: 7,
                                 minY: 0,
-                                maxY: 60,
+                                maxY: 1,
                                 lineBarsData: [
                                   LineChartBarData(
                                       spots: snapshot.data!,
@@ -206,17 +212,6 @@ class _DurationDayState extends State<DurationDay> {
                                       barWidth: 3,
                                       belowBarData: BarAreaData(
                                         show: false,
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            Color(0xFF1DB954).withOpacity(0.15),
-                                            Color(0xFF1DB954)
-                                          ]
-                                              .map((color) =>
-                                                  color.withOpacity(0.3))
-                                              .toList(),
-                                          begin: Alignment(-1.0, -2.0),
-                                          end: Alignment(1.0, 1.0),
-                                        ),
                                       ),
                                       dotData: FlDotData(
                                         show: false,
@@ -239,43 +234,77 @@ class _DurationDayState extends State<DurationDay> {
       fontWeight: FontWeight.normal,
       fontSize: 9,
     );
+    String text;
+
+    switch (value.toInt()) {
+      case 1:
+        text = 'MON';
+        break;
+      case 2:
+        text = 'TUE';
+        break;
+      case 3:
+        text = 'WED';
+        break;
+      case 4:
+        text = 'THU';
+        break;
+      case 5:
+        text = 'FRI';
+        break;
+      case 6:
+        text = 'SAT';
+        break;
+      case 7:
+        text = 'SUN';
+        break;
+      default:
+        text = '';
+        break;
+    }
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
       child: Text(
-        value.toInt().toString(),
+        text,
         style: style,
       ),
     );
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(
-      color: Color(0xFF707070),
-      fontWeight: FontWeight.normal,
-      fontSize: 9,
-    );
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = '0';
-        break;
-      case 20:
-        text = '20';
-        break;
-      case 40:
-        text = '40';
-        break;
-      case 60:
-        text = '60';
-        break;
-      default:
-        return Container();
+    Widget ret;
+
+    if (0 == value.toDouble()) {
+      ret = SvgPicture.asset(
+        'assets/Vector1.svg',
+        height: 16,
+      );
+    } else if (0.25 == value.toDouble()) {
+      ret = SvgPicture.asset(
+        'assets/Vector2.svg',
+        height: 16,
+      );
+    } else if (value.toDouble() == 0.5) {
+      ret = SvgPicture.asset(
+        'assets/Vector3.svg',
+        height: 16,
+      );
+    } else if (value.toDouble() == 0.75) {
+      ret = SvgPicture.asset(
+        'assets/Vector4.svg',
+        height: 16,
+      );
+    } else {
+      ret = SvgPicture.asset(
+        'assets/Vector5.svg',
+        height: 16,
+      );
     }
 
-    return Text(
-      text,
-      style: style,
+    return Padding(
+      padding: const EdgeInsets.only(right: 6),
+      child: ret,
     );
   }
 }

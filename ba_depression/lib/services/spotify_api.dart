@@ -26,8 +26,9 @@ class SpotifyApi {
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
-      throw Exception(
-          'Failed to get user with status code ${response.statusCode}');
+      print('Failed to get user with status code ${response.statusCode}');
+
+      return null;
     }
   }
 
@@ -47,8 +48,10 @@ class SpotifyApi {
           playedAt: DateTime.now(),
           isPlaying: false);
     } else {
-      throw Exception(
+      print(
           'Failed to get current track with status code ${response.statusCode}');
+
+      return null;
     }
   }
 
@@ -62,8 +65,9 @@ class SpotifyApi {
 
       return tracks;
     } else {
-      throw Exception(
+      print(
           'Failed to get recently played tracks with status code ${response.statusCode}');
+      return null;
     }
   }
 
@@ -74,8 +78,10 @@ class SpotifyApi {
       List<Artist>? artists = Artist.fromJson(json.decode(response.body));
       return artists;
     } else {
-      throw Exception(
+      print(
           'Failed to get top artists with status code ${response.statusCode}');
+
+      return null;
     }
   }
 
@@ -91,8 +97,9 @@ class SpotifyApi {
           AudioFeatures.fromJson(json.decode(response.body));
       return audioFeatures;
     } else {
-      throw Exception(
+      print(
           'Failed to get top artists with status code ${response.statusCode}');
+      return null;
     }
   }
 

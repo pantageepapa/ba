@@ -46,7 +46,7 @@ class _OverviewPageState extends State<OverviewPage> {
       }
       DatabaseService().addSongs(uid);
     });
-    _timer = Timer.periodic(Duration(seconds: 30), (timer) async {
+    _timer = Timer.periodic(Duration(minutes: 30), (timer) async {
       final prefs = await SharedPreferences.getInstance();
       final uid = prefs.getString('uid');
       if (uid == null) {

@@ -10,20 +10,18 @@ import 'package:provider/provider.dart';
 import '../../../services/graph_service.dart';
 import '../../../services/spotify_auth.dart';
 
-class DurationDay extends StatefulWidget {
-  const DurationDay({
-    Key? key,
-  }) : super(key: key);
+class DurationWeek extends StatefulWidget {
+  const DurationWeek({Key? key}) : super(key: key);
 
   @override
-  State<DurationDay> createState() => _DurationDayState();
+  State<DurationWeek> createState() => _DurationWeekState();
 }
 
-class _DurationDayState extends State<DurationDay> {
+class _DurationWeekState extends State<DurationWeek> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<FlSpot>?>(
-        future: GraphService().getDurationsDay(
+        future: GraphService().getDurationsWeek(
             Provider.of<SpotifyAuth>(context, listen: false).user!.id),
         builder: ((context, snapshot) {
           switch (snapshot.connectionState) {
@@ -94,7 +92,7 @@ class _DurationDayState extends State<DurationDay> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Total playing minutes per hour in a day',
+                                Text('Total playing minutes per day in a week',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -108,7 +106,7 @@ class _DurationDayState extends State<DurationDay> {
                             child: LineChart(LineChartData(
                                 gridData: FlGridData(
                                     show: true,
-                                    horizontalInterval: 20,
+                                    horizontalInterval: 50,
                                     drawVerticalLine: false,
                                     getDrawingHorizontalLine: (value) {
                                       return FlLine(
@@ -165,7 +163,7 @@ class _DurationDayState extends State<DurationDay> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 1,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
@@ -195,10 +193,10 @@ class _DurationDayState extends State<DurationDay> {
                                         width: 1,
                                       ),
                                     )),
-                                minX: 0,
-                                maxX: 23,
+                                minX: 1,
+                                maxX: 7,
                                 minY: 0,
-                                maxY: 60,
+                                maxY: 300,
                                 lineBarsData: [
                                   LineChartBarData(
                                       spots: snapshot.data!,
@@ -210,10 +208,10 @@ class _DurationDayState extends State<DurationDay> {
                                           colors: [
                                             Color(0xFF1DB954).withOpacity(0.15),
                                             Color(0xFF1DB954)
-                                          ]
-                                              .map((color) =>
-                                                  color.withOpacity(0.3))
-                                              .toList(),
+                                          ],
+                                          // .map((color) =>
+                                          //     color.withOpacity(0.3))
+                                          // .toList(),
                                           begin: Alignment(-1.0, -2.0),
                                           end: Alignment(1.0, 1.0),
                                         ),
@@ -239,11 +237,39 @@ class _DurationDayState extends State<DurationDay> {
       fontWeight: FontWeight.normal,
       fontSize: 9,
     );
+    String text;
+
+    switch (value.toInt()) {
+      case 1:
+        text = 'MON';
+        break;
+      case 2:
+        text = 'TUE';
+        break;
+      case 3:
+        text = 'WED';
+        break;
+      case 4:
+        text = 'THU';
+        break;
+      case 5:
+        text = 'FRI';
+        break;
+      case 6:
+        text = 'SAT';
+        break;
+      case 7:
+        text = 'SUN';
+        break;
+      default:
+        text = '';
+        break;
+    }
 
     return SideTitleWidget(
       axisSide: meta.axisSide,
       child: Text(
-        value.toInt().toString(),
+        text,
         style: style,
       ),
     );
@@ -255,26 +281,9 @@ class _DurationDayState extends State<DurationDay> {
       fontWeight: FontWeight.normal,
       fontSize: 9,
     );
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = '0';
-        break;
-      case 20:
-        text = '20';
-        break;
-      case 40:
-        text = '40';
-        break;
-      case 60:
-        text = '60';
-        break;
-      default:
-        return Container();
-    }
 
     return Text(
-      text,
+      value.toInt().toString(),
       style: style,
     );
   }

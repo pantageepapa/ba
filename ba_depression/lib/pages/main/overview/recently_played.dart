@@ -92,7 +92,13 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
                             blurRadius: 6.0),
                       ],
                     ),
-                    child: Text("Error occured"));
+                    child: Center(
+                      child: Text(
+                        "Error occured. Try to reload.",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700, fontSize: 15),
+                      ),
+                    ));
               } else {
                 return Container(
                   height: MediaQuery.of(context).size.height * 0.4,

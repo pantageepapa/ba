@@ -1,9 +1,12 @@
 import 'package:ba_depression/pages/main/measurement/duration_day.dart';
 import 'package:ba_depression/pages/main/measurement/duration_month.dart';
+import 'package:ba_depression/pages/main/measurement/duration_week.dart';
 import 'package:ba_depression/pages/main/measurement/tempo_day.dart';
 import 'package:ba_depression/pages/main/measurement/tempo_month.dart';
+import 'package:ba_depression/pages/main/measurement/tempo_week.dart';
 import 'package:ba_depression/pages/main/measurement/valence_day.dart';
 import 'package:ba_depression/pages/main/measurement/valence_month.dart';
+import 'package:ba_depression/pages/main/measurement/valence_week.dart';
 import 'package:ba_depression/pages/main/overview/music_player.dart';
 import 'package:ba_depression/pages/main/all/top_bar.dart';
 import 'package:ba_depression/services/firebase_db.dart';
@@ -32,7 +35,7 @@ class _MeasurementPageState extends State<MeasurementPage>
     super.initState();
     tabController = TabController(
       initialIndex: 0,
-      length: 2,
+      length: 3,
       vsync: this,
     );
   }
@@ -51,7 +54,7 @@ class _MeasurementPageState extends State<MeasurementPage>
         horizontal: MediaQuery.of(context).size.width * 0.06,
       ),
       child: DefaultTabController(
-        length: 2,
+        length: 3,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -95,6 +98,22 @@ class _MeasurementPageState extends State<MeasurementPage>
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
                           ),
+                          DurationWeek(),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          TempoWeek(),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          ValenceWeek()
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
                           DurationMonth(),
                           SizedBox(
                             height: MediaQuery.of(context).size.height * 0.02,
@@ -129,9 +148,9 @@ class _MeasurementPageState extends State<MeasurementPage>
           Tab(
             text: 'D',
           ),
-          // Tab(
-          //   text: 'W',
-          // ),
+          Tab(
+            text: 'W',
+          ),
           // Tab(
           //   text: 'M',
           // ),

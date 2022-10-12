@@ -95,10 +95,12 @@ class _TutorialPage4State extends State<TutorialPage4> {
                             height: 180,
                             width: 180,
                             decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 3),
+                              border: Border.all(
+                                  color: Theme.of(context).primaryColor,
+                                  width: 3),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(100)),
-                              color: Color(0xFFF3F3F3),
+                              color: Colors.white,
                             ),
                             child: AspectRatio(
                               aspectRatio: 1 / 1,
