@@ -13,7 +13,7 @@ class DatabaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> addUser(String uid) async {
-    //await _firestore.collection('songs').doc(uid).collection('songs');
+    await _firestore.collection('songs').doc(uid).set({'songs': []});
 
     await _firestore.collection('moods').doc(uid).set({'moods': []}).then(
         (value) => print("User added successfully"),
@@ -51,9 +51,9 @@ class DatabaseService {
     for (Track song in songs) {
       song_lastupdates.add(song.playedAt.millisecondsSinceEpoch);
       if (last_update < song.playedAt.millisecondsSinceEpoch) {
-        // print(DateTime.fromMillisecondsSinceEpoch(
-        //     song.playedAt.millisecondsSinceEpoch));
-        // print("song added");
+        print(DateTime.fromMillisecondsSinceEpoch(
+            song.playedAt.millisecondsSinceEpoch));
+        print("song added");
         AudioFeatures? audioFeatures =
             await SpotifyApi.getAudioFeatures(song.id);
         if (audioFeatures == null) {

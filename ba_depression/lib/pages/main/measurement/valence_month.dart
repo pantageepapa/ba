@@ -94,7 +94,7 @@ class _ValenceMonthState extends State<ValenceMonth> {
                                       0.003,
                                 ),
                                 Text(
-                                    'Average valence describing the musical positiveness in a month',
+                                    'This month\'s average valence representing the mood of songs',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -170,7 +170,7 @@ class _ValenceMonthState extends State<ValenceMonth> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 4,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
@@ -202,7 +202,7 @@ class _ValenceMonthState extends State<ValenceMonth> {
                                       ),
                                     )),
                                 minX: 1,
-                                maxX: 30,
+                                maxX: 31,
                                 minY: 0,
                                 maxY: 1,
                                 lineBarsData: [

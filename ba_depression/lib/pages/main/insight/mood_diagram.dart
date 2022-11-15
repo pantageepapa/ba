@@ -73,8 +73,7 @@ class _MoodDiagramState extends State<MoodDiagram> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.003,
                               ),
-                              Text(
-                                  'Your average mood assessment per day in a month',
+                              Text('Your average mood assessment in this month',
                                   style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       fontSize: 12,
@@ -148,7 +147,7 @@ class _MoodDiagramState extends State<MoodDiagram> {
                                 bottomTitles: AxisTitles(
                                   sideTitles: SideTitles(
                                     showTitles: true,
-                                    interval: 3,
+                                    interval: 4,
                                     getTitlesWidget: bottomTitleWidgets,
                                   ),
                                 ),
@@ -177,7 +176,7 @@ class _MoodDiagramState extends State<MoodDiagram> {
                                     ),
                                   )),
                               minX: 1,
-                              maxX: 30,
+                              maxX: 31,
                               minY: 0,
                               maxY: 10,
                               lineBarsData: [

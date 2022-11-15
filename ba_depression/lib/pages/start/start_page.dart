@@ -48,8 +48,9 @@ class _StartPageState extends State<StartPage> {
     try {
       await auth.signInFromSavedTokens();
       if (!mounted) return;
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomePage()));
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => HomePage()),
+          ModalRoute.withName('/'));
     } catch (_) {
       setState(() => _isLoading = false);
     }
@@ -68,7 +69,7 @@ class _StartPageState extends State<StartPage> {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 2 -
-                        MediaQuery.of(context).size.height / 5,
+                        MediaQuery.of(context).size.height / 4,
                   ),
                   Text(
                     'mHealth.',
@@ -85,7 +86,7 @@ class _StartPageState extends State<StartPage> {
                     child: Text(
                       'An innovative way to take care of your mental health',
                       style: TextStyle(
-                          fontSize: 13,
+                          fontSize: 19,
                           fontWeight: FontWeight.normal,
                           color: Color(0xFFC4C4C4)),
                     ),
@@ -103,9 +104,10 @@ class _StartPageState extends State<StartPage> {
                   : InkWell(
                       onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TutorialPage1()));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TutorialPage1()),
+                        );
                       },
                       child: SafeArea(
                         child: Container(

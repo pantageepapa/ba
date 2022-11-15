@@ -89,7 +89,7 @@ class _TempoDayState extends State<TempoDay> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Average BPM of songs per hour in a month',
+                                Text('Today\'s average tempo of songs in BPM',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -160,7 +160,7 @@ class _TempoDayState extends State<TempoDay> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 1,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
@@ -221,7 +221,7 @@ class _TempoDayState extends State<TempoDay> {
     const style = TextStyle(
       color: Color(0xFF707070),
       fontWeight: FontWeight.normal,
-      fontSize: 9,
+      fontSize: 8,
     );
     return SideTitleWidget(
       axisSide: meta.axisSide,

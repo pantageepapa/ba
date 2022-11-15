@@ -69,7 +69,7 @@ class _AverageMoodState extends State<AverageMood> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.003,
                         ),
-                        Text('Your average mood assessment in a week',
+                        Text('Your average mood assessment in this week',
                             style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 fontSize: 12,
@@ -80,7 +80,8 @@ class _AverageMoodState extends State<AverageMood> {
                         LinearPercentIndicator(
                           animation: false,
                           barRadius: Radius.circular(19),
-                          percent: snapshot.data! / 10,
+                          percent:
+                              snapshot.data! == 0 ? 0 : snapshot.data! / 10,
                           padding: EdgeInsets.all(0),
                           leading: Padding(
                             padding: const EdgeInsets.only(right: 10),
@@ -92,13 +93,21 @@ class _AverageMoodState extends State<AverageMood> {
                                   color: Color(0xFF1DB954).withOpacity(0.15),
                                   borderRadius: BorderRadius.circular(20)),
                               child: Center(
-                                child: Text(
-                                  '${(snapshot.data! * 10).toStringAsFixed(0)} %',
-                                  style: TextStyle(
-                                      color: Color(0xFF1DB954),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                                child: snapshot.data == 0
+                                    ? Text(
+                                        'no data',
+                                        style: TextStyle(
+                                            color: Color(0xFF1DB954),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600),
+                                      )
+                                    : Text(
+                                        '${(snapshot.data! * 10).toStringAsFixed(0)} %',
+                                        style: TextStyle(
+                                            color: Color(0xFF1DB954),
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600),
+                                      ),
                               ),
                             ),
                           ),

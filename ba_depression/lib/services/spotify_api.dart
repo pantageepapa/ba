@@ -129,6 +129,8 @@ class SpotifyApi {
         throw Exception(
             'Failed to skip current track with status code ${response.statusCode}');
       }
+    } else {
+      throw Exception('Failed to skip current track as no device is connected');
     }
   }
 

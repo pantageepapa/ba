@@ -92,7 +92,8 @@ class _DurationWeekState extends State<DurationWeek> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Total playing minutes per day in a week',
+                                Text(
+                                    'This week\'s total playing time in minutes',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,

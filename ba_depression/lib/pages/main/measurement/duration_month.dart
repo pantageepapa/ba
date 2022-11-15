@@ -92,7 +92,8 @@ class _DurationMonthState extends State<DurationMonth> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Total playing minutes per day in a month',
+                                Text(
+                                    'This month\'s total playing time in minutes',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -163,7 +164,7 @@ class _DurationMonthState extends State<DurationMonth> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 4,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
@@ -194,7 +195,7 @@ class _DurationMonthState extends State<DurationMonth> {
                                       ),
                                     )),
                                 minX: 1,
-                                maxX: 30,
+                                maxX: 31,
                                 minY: 0,
                                 maxY: 300,
                                 lineBarsData: [

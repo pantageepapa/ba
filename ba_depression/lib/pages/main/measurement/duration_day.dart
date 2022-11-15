@@ -94,7 +94,7 @@ class _DurationDayState extends State<DurationDay> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Total playing minutes per hour in a day',
+                                Text('Today\'s total playing time in minutes',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -165,7 +165,7 @@ class _DurationDayState extends State<DurationDay> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 1,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
@@ -237,7 +237,7 @@ class _DurationDayState extends State<DurationDay> {
     const style = TextStyle(
       color: Color(0xFF707070),
       fontWeight: FontWeight.normal,
-      fontSize: 9,
+      fontSize: 8,
     );
 
     return SideTitleWidget(

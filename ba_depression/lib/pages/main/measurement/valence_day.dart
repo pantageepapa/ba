@@ -94,7 +94,7 @@ class _ValenceDayState extends State<ValenceDay> {
                                       0.003,
                                 ),
                                 Text(
-                                    'Average valence describing the musical positiveness in a day',
+                                    'Today\'s average valence representing the mood of songs',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -170,7 +170,7 @@ class _ValenceDayState extends State<ValenceDay> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 1,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
@@ -232,7 +232,7 @@ class _ValenceDayState extends State<ValenceDay> {
     const style = TextStyle(
       color: Color(0xFF707070),
       fontWeight: FontWeight.normal,
-      fontSize: 9,
+      fontSize: 8,
     );
     return SideTitleWidget(
       axisSide: meta.axisSide,

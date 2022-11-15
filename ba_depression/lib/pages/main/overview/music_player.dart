@@ -4,10 +4,10 @@ import 'package:ba_depression/models/custom_image_provider.dart';
 import 'package:ba_depression/models/track.dart';
 import 'package:ba_depression/services/api_path.dart';
 import 'package:ba_depression/services/spotify_api.dart';
-import 'package:ba_depression/old/track_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class MusicPlayer extends StatefulWidget {
@@ -250,7 +250,15 @@ class _MusicPlayerState extends State<MusicPlayer> {
                             GestureDetector(
                               behavior: HitTestBehavior.translucent,
                               onTap: () async {
-                                await SpotifyApi.skip();
+                                try {
+                                  await SpotifyApi.skip();
+                                } catch (e) {
+                                  Fluttertoast.showToast(
+                                      gravity: ToastGravity.TOP,
+                                      fontSize: 13,
+                                      msg: "Play the song on your device first",
+                                      backgroundColor: Color(0xFF1DB954));
+                                }
                                 await getTrack();
                               },
                               child: SvgPicture.asset(
@@ -321,7 +329,7 @@ class _PlayerState extends State<Player> {
                   ))
               : InkWell(
                   onTap: () async {
-                    await SpotifyApi.play();
+                    await SpotifyApi.skip();
                     setState(() {
                       widget.isPlaying = true;
                     });

@@ -125,33 +125,45 @@ class _TopArtistsState extends State<TopArtists> {
                       // SizedBox(
                       //   height: MediaQuery.of(context).size.height * 0.01,
                       // ),
-                      Expanded(
-                        child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            controller: _scrollController,
-                            separatorBuilder: (context, index) {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.05,
-                              );
-                            },
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              return index == 0
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(left: 15),
-                                      child: buildCard(
-                                          snapshot.data![index], index),
-                                    )
-                                  : index == snapshot.data!.length - 1
-                                      ? Padding(
-                                          padding: EdgeInsets.only(right: 15),
-                                          child: buildCard(
-                                              snapshot.data![index], index))
-                                      : buildCard(snapshot.data![index], index);
-                            }),
-                      ),
+                      snapshot.data!.isEmpty
+                          ? Center(
+                              child: Text(
+                              "Not enough data",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 15),
+                            ))
+                          : Expanded(
+                              child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  controller: _scrollController,
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.05,
+                                    );
+                                  },
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    return index == 0
+                                        ? Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 15),
+                                            child: buildCard(
+                                                snapshot.data![index], index),
+                                          )
+                                        : index == snapshot.data!.length - 1
+                                            ? Padding(
+                                                padding:
+                                                    EdgeInsets.only(right: 15),
+                                                child: buildCard(
+                                                    snapshot.data![index],
+                                                    index))
+                                            : buildCard(
+                                                snapshot.data![index], index);
+                                  }),
+                            ),
                       SizedBox(
                         height: 25,
                       )

@@ -94,7 +94,7 @@ class _ValenceWeekState extends State<ValenceWeek> {
                                       0.003,
                                 ),
                                 Text(
-                                    'Average valence describing the musical positiveness in a week',
+                                    'This week\'s average valence representing the mood of songs',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,

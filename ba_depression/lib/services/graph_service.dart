@@ -1,12 +1,20 @@
+import 'dart:core';
+
 import 'package:ba_depression/services/firebase_db.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class GraphService {
   DatabaseService db = DatabaseService();
-  String dateTime = DateTime.now().year.toString() +
-      DateTime.now().month.toString() +
-      DateTime.now().day.toString();
+  String day = DateTime.now().day < 10
+      ? '0${DateTime.now().day}'
+      : DateTime.now().day.toString();
+
+  String dateTime = '';
+  GraphService() {
+    dateTime =
+        DateTime.now().year.toString() + DateTime.now().month.toString() + day;
+  }
   String monthTime = '${DateTime.now().year}${DateTime.now().month}01';
   String mostRecentMonday = DateTime(DateTime.now().year, DateTime.now().month,
           DateTime.now().day - (DateTime.now().weekday - 1))
@@ -54,7 +62,7 @@ class GraphService {
 
     for (var element in durations.entries) {
       durationsMonth.update(element.key.day, (value) {
-        multipliers[element.key.day]++;
+        multipliers[element.key.day - 1]++;
         return value + element.value;
       }, ifAbsent: (() => element.value));
     }
@@ -71,6 +79,7 @@ class GraphService {
       ret[element.key - 1] =
           FlSpot(element.key.toDouble(), durationM.roundToDouble());
     }
+
     return ret;
   }
 
@@ -104,6 +113,7 @@ class GraphService {
   }
 
   Future<List<FlSpot>?> getBPM(String uid) async {
+    print(dateTime);
     Map<DateTime, double>? tempos =
         await db.getBPM(uid, Timestamp.fromDate(DateTime.parse(dateTime)));
 
@@ -330,10 +340,13 @@ class GraphService {
     }
 
     for (var mood in moods.entries) {
+      print(multiplier);
       multiplier++;
       ret += mood.value;
     }
-
+    if (ret == 0) {
+      return 0;
+    }
     return ret / multiplier;
   }
 }

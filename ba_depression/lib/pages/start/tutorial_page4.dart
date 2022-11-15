@@ -8,6 +8,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TutorialPage4 extends StatefulWidget {
   const TutorialPage4({Key? key}) : super(key: key);
@@ -17,6 +18,20 @@ class TutorialPage4 extends StatefulWidget {
 }
 
 class _TutorialPage4State extends State<TutorialPage4> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    FirebaseAuth.instance.signInAnonymously();
+    FirebaseAuth.instance.userChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<SpotifyAuth>();

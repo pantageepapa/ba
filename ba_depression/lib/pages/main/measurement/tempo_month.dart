@@ -89,7 +89,8 @@ class _TempoMonthState extends State<TempoMonth> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Average BPM of songs per day in a month',
+                                Text(
+                                    'This month\'s average tempo of songs in BPM',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,
@@ -160,7 +161,7 @@ class _TempoMonthState extends State<TempoMonth> {
                                   bottomTitles: AxisTitles(
                                     sideTitles: SideTitles(
                                       showTitles: true,
-                                      interval: 3,
+                                      interval: 4,
                                       getTitlesWidget: bottomTitleWidgets,
                                     ),
                                   ),
@@ -191,7 +192,7 @@ class _TempoMonthState extends State<TempoMonth> {
                                       ),
                                     )),
                                 minX: 1,
-                                maxX: 30,
+                                maxX: 31,
                                 minY: 0,
                                 maxY: 200,
                                 lineBarsData: [

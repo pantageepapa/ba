@@ -89,7 +89,8 @@ class _TempoWeekState extends State<TempoWeek> {
                                   height: MediaQuery.of(context).size.height *
                                       0.003,
                                 ),
-                                Text('Average BPM of songs per day in a week',
+                                Text(
+                                    'This week\'s average tempo of songs in BPM',
                                     style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         fontSize: 12,

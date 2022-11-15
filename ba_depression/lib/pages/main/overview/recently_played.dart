@@ -126,32 +126,41 @@ class _RecentlyPlayedState extends State<RecentlyPlayed> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.01,
                       ),
-                      Expanded(
-                        child: ListView.separated(
-                            controller: _scrollController,
-                            separatorBuilder: (context, index) {
-                              return Divider(
-                                indent:
-                                    MediaQuery.of(context).size.width * 0.19,
-                                endIndent:
-                                    MediaQuery.of(context).size.width * 0.07,
-                                color: Color(0x20707070),
-                              );
-                            },
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: buildCard(
-                                  snapshot.data![index],
-                                ),
-                              );
-                            }),
-                      ),
+                      snapshot.data!.isEmpty
+                          ? Center(
+                              child: Text(
+                              "Not enough data",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700, fontSize: 15),
+                            ))
+                          : Expanded(
+                              child: ListView.separated(
+                                  controller: _scrollController,
+                                  separatorBuilder: (context, index) {
+                                    return Divider(
+                                      indent:
+                                          MediaQuery.of(context).size.width *
+                                              0.19,
+                                      endIndent:
+                                          MediaQuery.of(context).size.width *
+                                              0.07,
+                                      color: Color(0x20707070),
+                                    );
+                                  },
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 15,
+                                      ),
+                                      child: buildCard(
+                                        snapshot.data![index],
+                                      ),
+                                    );
+                                  }),
+                            ),
                       SizedBox(
                         height: 20,
                       )

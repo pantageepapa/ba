@@ -3,7 +3,6 @@ import 'package:ba_depression/pages/main/all/home_page.dart';
 import 'package:ba_depression/services/firebase_db.dart';
 import 'package:ba_depression/services/spotify_auth.dart';
 import 'package:ba_depression/pages/start/start_page.dart';
-import 'package:ba_depression/old/track_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<TrackProvider>(create: (_) => TrackProvider()),
         ChangeNotifierProvider<SpotifyAuth>(
           create: (_) => SpotifyAuth(),
         ),
