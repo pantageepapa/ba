@@ -41,7 +41,6 @@ class DatabaseService {
     int? last_update = prefs.getInt('last_update');
     last_update ??= 0;
     // print(DateTime.fromMillisecondsSinceEpoch(last_update));
-
     List<Track>? songs = await SpotifyApi.getRecentlyPlayed(50);
     if (songs == null) {
       return;
