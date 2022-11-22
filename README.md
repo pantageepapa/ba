@@ -1,7 +1,3 @@
-# mHealth app
-
-A new Flutter project.
-
 ## Getting Started
 
 This project is the implementation part of my bachelor thesis. The app aims to help depressed people using their Spotify data. 
@@ -56,8 +52,8 @@ lib/
 Now, lets dive into the lib folder which has the main code for the application.
 
 ```
-1- models - Contains store(s) for state-management of your application, to connect the reactive data of your application with the UI.
-2- pages - Contains all the ui of your project, contains sub directory for each screen.
-3- services - Contains the utilities/common functions of your application. 
+1- models - Contains store(s) for state-management of the application, to connect the reactive data of the application with the UI.
+2- pages - Contains all the ui of the project, contains sub directory for each screen.
+3- services - Contains the utilities/common functions of the application. 
 4- main.dart - This is the starting point of the application. All the application level configurations are defined in this file i.e, theme, routes, title, orientation etc.
 ```
