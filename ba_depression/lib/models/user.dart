@@ -24,7 +24,6 @@ class User extends Equatable {
         ],
         'id': id
       };
-
   @override
   List<Object> get props => [name, id];
 }

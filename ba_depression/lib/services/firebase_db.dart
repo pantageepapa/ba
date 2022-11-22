@@ -14,7 +14,6 @@ class DatabaseService {
 
   Future<void> addUser(String uid) async {
     await _firestore.collection('songs').doc(uid).set({'songs': []});
-
     await _firestore.collection('moods').doc(uid).set({'moods': []}).then(
         (value) => print("User added successfully"),
         onError: (e) => print("Error adding user"));
@@ -28,11 +27,6 @@ class DatabaseService {
         .add({"addedOn": DateTime.now(), "mood": mood}).then(
             (value) => print("Mood added successfully"),
             onError: (e) => print("Error adding user"));
-    // await _firestore.collection('moods').doc(uid).update({
-    //   "moods": FieldValue.arrayUnion([
-    //     {"addedOn": DateTime.now(), "mood": mood}
-    //   ])
-    // })
   }
 
   Future<void> addSongs(String uid) async {
@@ -108,10 +102,8 @@ class DatabaseService {
     return ret;
   }
 
-  Future<Map<DateTime, double>?> getValence(
-      String uid, Timestamp lastUpdate) async {
+  Future<Map<DateTime, double>?> getValence(String uid, Timestamp lastUpdate) async {
     final Map<DateTime, double> ret = {};
-    print('valence called');
     QuerySnapshot<Map<dynamic, dynamic>> dShot = await _firestore
         .collection('songs')
         .doc(uid)

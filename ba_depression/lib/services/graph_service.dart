@@ -53,8 +53,6 @@ class GraphService {
   Future<List<FlSpot>?> getDurationsMonth(String uid) async {
     Map<DateTime, int>? durations = await db.getSongDurations(
         uid, Timestamp.fromDate(DateTime.parse(monthTime)));
-
-    //print(Timestamp.fromDate(DateTime.parse(monthTime)).toDate());
     if (durations == null) return null;
 
     Map<int, int> durationsMonth = {};
@@ -86,29 +84,23 @@ class GraphService {
   Future<List<FlSpot>?> getDurationsWeek(String uid) async {
     Map<DateTime, int>? durations = await db.getSongDurations(
         uid, Timestamp.fromDate(DateTime.parse(mostRecentMonday)));
-
-    //print(Timestamp.fromDate(DateTime.parse(monthTime)).toDate());
     if (durations == null) return null;
     Map<int, int> durationsWeek = {};
-
     for (var element in durations.entries) {
       durationsWeek.update(element.key.weekday, (value) {
         return value + element.value;
       }, ifAbsent: (() => element.value));
     }
-    //default values 0
     List<FlSpot> ret = [];
     for (var i = 1; i <= 7; i++) {
       ret.add(FlSpot(i.toDouble(), 0));
     }
-
     for (var element in durationsWeek.entries) {
       //calculate duration to minutes
       int durationM = Duration(milliseconds: element.value).inMinutes;
       ret[element.key - 1] =
           FlSpot(element.key.toDouble(), durationM.roundToDouble());
     }
-
     return ret;
   }
 

@@ -18,23 +18,28 @@ class SpotifyApi {
     SpotifyInterceptor(),
   ], retryPolicy: ExpiredTokenRetryPolicy());
 
+  /*It reads the user data (display name, profile picture and Spotify id) and 
+  returns a User object*/
+
   static Future<User?> getCurrentUser() async {
     final response = await client.get(
       Uri.parse(APIPath.getCurrentUser),
     );
-
     if (response.statusCode == 200) {
       return User.fromJson(json.decode(response.body));
     } else {
       print('Failed to get user with status code ${response.statusCode}');
-
       return null;
     }
   }
 
+  /*It reads the currently played track data (artist name, track name, track ima
+  ge URL, and current time) and returns a Track object. If there is no currently 
+  playing track, the error code 204 is returned, the method returns a Track object 
+  with dummy values, and playing now is set to false.*/
+
   static Future<Track?> getCurrentTrack() async {
     final response = await client.get(Uri.parse(APIPath.getCurrentTrack));
-
     if (response.statusCode == 200) {
       print("current Track called");
       await Track.saveCurrentSong(json.decode(response.body));
@@ -50,10 +55,13 @@ class SpotifyApi {
     } else {
       print(
           'Failed to get current track with status code ${response.statusCode}');
-
       return null;
     }
   }
+
+  /*This method reads the recently played songs of the user. The number of songs 
+  can be defined in the request. However, the maximum amount of recently played 
+  songs is limited to 50 by Spotify API. The method returns a list of Track objects.*/
 
   static Future<List<Track>?> getRecentlyPlayed(int limit) async {
     final response = await client
@@ -71,6 +79,8 @@ class SpotifyApi {
     }
   }
 
+  /*It gets the top 5 favorite artists of the user, thereby collecting the artist 
+  name and artist image URL. */
   static Future<List<Artist>?> getTopArtists() async {
     final response = await client.get(Uri.parse(APIPath.getTopArtists));
     if (response.statusCode == 200) {
@@ -85,11 +95,13 @@ class SpotifyApi {
     }
   }
 
+  /*It reads the audio features of the song with the specified id. It returns the 
+  object AudioFeatures, which contains information about tempo, valence, id, and 
+  duration of the track with the specified id.*/
   static Future<AudioFeatures?> getAudioFeatures(String id) async {
     final response = await client.get(Uri.parse(APIPath.audioFeatures + id));
 
     if (response.statusCode == 200) {
-      // print("audio features called");
       if (response.body == '') {
         return null;
       }
@@ -103,6 +115,7 @@ class SpotifyApi {
     }
   }
 
+  /*The method pauses the playback on the user’s account if a song is playing. */
   static pause() async {
     final response = await client.put(Uri.parse(APIPath.pausePlayback));
     if (response.statusCode == 204) {
@@ -114,6 +127,7 @@ class SpotifyApi {
     }
   }
 
+  /*The method skips the currently playing song. */
   static skip() async {
     final prefs = await SharedPreferences.getInstance();
     String? deviceId = prefs.getString(Track.deviceId);
@@ -122,7 +136,6 @@ class SpotifyApi {
       final response = await client
           .post(Uri.parse('${APIPath.nextTrack}?device_id=$deviceId'));
       if (response.statusCode == 204) {
-        print('Successfully skipped');
         return;
       } else {
         print(response.body);
@@ -134,6 +147,7 @@ class SpotifyApi {
     }
   }
 
+  /*The method skips to the previous song in the user’s queue.*/
   static previous() async {
     final prefs = await SharedPreferences.getInstance();
     String? deviceId = prefs.getString(Track.deviceId);
@@ -149,33 +163,6 @@ class SpotifyApi {
         throw Exception(
             'Failed to skip current track with status code ${response.statusCode}');
       }
-    }
-  }
-
-  static play() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? context = prefs.getString(Track.context);
-    String? deviceId = prefs.getString(Track.deviceId);
-
-    if (deviceId != null && context != null) {
-      final body = {
-        'context_uri': context,
-        'position_ms': 0,
-        'offset': {'position': 2}
-      };
-      print(json.encode(body));
-      final response = await client.put(Uri.parse('${APIPath.pausePlayback}'),
-          body: json.encode(body));
-      if (response.statusCode == 204) {
-        print('Successfully played');
-        return;
-      } else {
-        print(response.body);
-        throw Exception(
-            'Failed to play current track with status code ${response.statusCode}');
-      }
-    } else {
-      throw Exception('Error while playing: No saved song found');
     }
   }
 }
